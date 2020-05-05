@@ -6,37 +6,85 @@ jQuery(document).ready(function($) {
     var template = Handlebars.compile(source);
     
     btnSearch.click(function () { 
-       var searchText = inputSearch.val();
-       inputSearch.val(' ');
-       
-       $.ajax({
-           url: "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
-           method: 'GET',
-           data: {
-               query: searchText,
-               language: "it-IT"
-           },
-           success: function (res) {
-                var movieListObj = res.results;
-                
-                for( var key in movieListObj ) {
-                    var movie = {
-                        title: movieListObj[key].title,
-                        originalTitle: movieListObj[key].original_title,
-                        originalLanguage: movieListObj[key].original_language,
-                        vote: movieListObj[key].vote_average
-                    }
-
-                    var html = template(movie);
-                    movieList.append(html);
+        var searchText = inputSearch.val().trim().toLowerCase();      
+        if (searchText !== '') {
+            console.clear();
+            $.ajax({
+                url: "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
+                method: 'GET',
+                data: {
+                    query: searchText,
+                    language: "it-IT"
+                },
+                success: function (res) {
+                    var movieListObj = res.results;        
+                    moviePrint(movieListObj, template, movieList);
+                },
+                error: function () {
+                    error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
+                    alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
                 }
-            },
-            error: function () {
-                error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
-                alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
-            }
-       });
-
+            });    
+        } else {
+            alert('Perfavore, inserisci il titolo del film');
+            console.error('Non è stato inserito nessun titolo');
+            inputSearch.focus().select();
+        }
     });
 
-}); // End Script'
+}); // End Script
+
+//_____________________FUNCTION______________________//
+function reset(element) {
+    element.html('');
+}
+
+function moviePrint(movieListObj, template, movieList) {
+    if( movieListObj.length > 0 ) {
+        reset(movieList);
+        for( var key in movieListObj ) {
+            var movie = {
+                title: movieListObj[key].title,
+                originalTitle: movieListObj[key].original_title,
+                //originalLanguage: movieListObj[key].original_language,
+                originalLanguage: fleg(movieListObj, key),
+                vote: starVote(movieListObj, key)
+            }
+
+            var html = template(movie);
+            movieList.append(html);
+        }
+    }
+}
+
+function starVote(movieListObj, key) {
+    var num = Math.round( movieListObj[key].vote_average / 2);
+    var difference = 5 - num;
+    var star = '';
+    
+    if ( num === 0 ) {
+        for ( var i = 0; i < 5; i++) {
+            star += '<i class="far fa-star"></i>';
+        }
+        return star;  
+    } else if ( num !== 0 ) {
+        for (var i = 0; i < num; i++) {
+            star += '<i class="fas fa-star"></i>';  
+        }
+        for (var i = 0; i < difference; i++) {
+            star += '<i class="far fa-star"></i>';
+        }
+        return star;
+    }
+}
+
+function fleg(movieListObj, key) {
+    var language = movieListObj[key].original_language;
+    if ( language === "it" ) {
+        return '<img src="img/it.svg" alt="italy" width="20" height="20">';
+    } else if ( language === "en" ) {
+        return '<img src="img/en.svg" alt="england" width="20" height="20">';
+    } else {
+        return language;
+    }
+}
