@@ -46,9 +46,9 @@ function moviePrint(movieListObj, template, movieList) {
             var movie = {
                 title: movieListObj[key].title,
                 originalTitle: movieListObj[key].original_title,
-                //originalLanguage: movieListObj[key].original_language,
                 originalLanguage: fleg(movieListObj, key),
-                vote: starVote(movieListObj, key)
+                vote: starVote(movieListObj, key),
+                type: "Film"
             }
 
             var html = template(movie);
