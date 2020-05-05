@@ -9,22 +9,9 @@ jQuery(document).ready(function($) {
         var searchText = inputSearch.val().trim().toLowerCase();      
         if (searchText !== '') {
             console.clear();
-            $.ajax({
-                url: "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
-                method: 'GET',
-                data: {
-                    query: searchText,
-                    language: "it-IT"
-                },
-                success: function (res) {
-                    var movieListObj = res.results;        
-                    moviePrint(movieListObj, template, movieList);
-                },
-                error: function () {
-                    error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
-                    alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
-                }
-            });    
+            reset(movieList);
+            ajaxMovie(searchText, template, movieList);
+            ajaxTv(searchText, template, movieList);
         } else {
             alert('Perfavore, inserisci il titolo del film');
             console.error('Non è stato inserito nessun titolo');
@@ -39,9 +26,46 @@ function reset(element) {
     element.html('');
 }
 
+function ajaxMovie(searchText, template, movieList) {
+    $.ajax({
+        url: "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
+        method: 'GET',
+        data: {
+            query: searchText,
+            language: "it-IT"
+        },
+        success: function (res) {
+            var movieListObj = res.results;        
+            moviePrint(movieListObj, template, movieList);
+        },
+        error: function () {
+            error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
+            alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
+        }
+    });
+}
+
+function ajaxTv (searchText, template, movieList) {
+    $.ajax({
+        url: "https://api.themoviedb.org/3/search/tv?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
+        metod: 'GET',
+        data: {
+            query: searchText,
+            language: "it-IT"
+        },
+        success: function(res) {
+            var tvListObj = res.results;
+            tvPrint(tvListObj, template, movieList);
+        },
+        error: function() {
+            error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
+            alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
+        }
+    });
+}
+
 function moviePrint(movieListObj, template, movieList) {
     if( movieListObj.length > 0 ) {
-        reset(movieList);
         for( var key in movieListObj ) {
             var movie = {
                 title: movieListObj[key].title,
@@ -52,6 +76,23 @@ function moviePrint(movieListObj, template, movieList) {
             }
 
             var html = template(movie);
+            movieList.append(html);
+        }
+    }
+}
+
+function tvPrint(tvListObj, template, movieList) {
+    if( tvListObj.length > 0 ) {
+        for( var key in tvListObj ) {
+            var tv = {
+                title: tvListObj[key].name,
+                originalTitle: tvListObj[key].original_name,
+                originalLanguage: fleg(tvListObj, key),
+                vote: starVote(tvListObj, key),
+                type: "TV"
+            }
+
+            var html = template(tv);
             movieList.append(html);
         }
     }
