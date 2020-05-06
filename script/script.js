@@ -73,7 +73,14 @@ function print(listObj, template, movieList, type) {
                 originalTitle = listObj[key].original_name;
             }
 
+            if (!!listObj[key].poster_path) {
+                poster = '<img src="https://image.tmdb.org/t/p/w342'+ listObj[key].poster_path + '" alt="'+ title +'" >';
+            } else {
+                poster = '<img src="img/no-poster.png" alt="#">'
+            }
+
             var movie = {
+                poster,
                 title,
                 originalTitle,
                 originalLanguage: fleg(listObj, key),
