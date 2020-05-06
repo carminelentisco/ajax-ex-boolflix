@@ -98,16 +98,16 @@ function starVote(listObj, key) {
     var difference = 5 - num;
     var star = '';
     
-    if ( num === 0 ) {
-        for ( var i = 0; i < 5; i++) {
+    if ( num !== 0 ) {
+        for ( var i = 1; i <= num; i++ ) {
+            star += '<i class="fas fa-star"></i>';
+        }
+        for ( var i = 1; i <= difference; i++ ) {
             star += '<i class="far fa-star"></i>';
         }
-        return star;  
-    } else if ( num !== 0 ) {
-        for (var i = 0; i < num; i++) {
-            star += '<i class="fas fa-star"></i>';  
-        }
-        for (var i = 0; i < difference; i++) {
+        return star;
+    } else if ( num === 0 ) {
+        for ( var i = 1; i <= 5; i++ ) {
             star += '<i class="far fa-star"></i>';
         }
         return star;
@@ -115,10 +115,9 @@ function starVote(listObj, key) {
 }
 function fleg(listObj, key) {
     var language = listObj[key].original_language;
-    if ( language === "it" ) {
-        return '<img src="img/it.svg" alt="italy" width="20" height="20">';
-    } else if ( language === "en" ) {
-        return '<img src="img/en.svg" alt="england" width="20" height="20">';
+
+    if ( ( language === "it" ) || ( language === "en" ) ) {
+        return '<img src="img/' + language + '.svg" alt="italy" class="flag">';
     } else {
         return language;
     }
