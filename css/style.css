@@ -30,6 +30,7 @@ body {
     position: fixed;
     height: 80px;
     width: 100%;
+    border-bottom: 1px solid #ff0000;
     background-color: #000;
     z-index: 1;
     display: flex;
@@ -115,6 +116,7 @@ body {
     display: block;
 }
 .movie:hover .layover {
+    border: 2px solid #fff;
     background-color: rgba(0, 0, 0, 1);
 }
 .movie:hover .movie-description{
