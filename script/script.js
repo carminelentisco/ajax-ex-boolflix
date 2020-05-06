@@ -8,14 +8,22 @@ jQuery(document).ready(function($) {
     btnSearch.click(function () { 
         var searchText = inputSearch.val().trim().toLowerCase();      
         if (searchText !== '') {
-            console.clear();
-            reset(movieList);
-            ajaxMovie(searchText, template, movieList);
-            ajaxTv(searchText, template, movieList);
+            ajaxContainer(searchText, template, movieList); 
         } else {
             alert('Perfavore, inserisci il titolo del film');
-            console.error('Non è stato inserito nessun titolo');
             inputSearch.focus().select();
+        }
+    });
+
+    inputSearch.keypress(function (e) { 
+        if (e.which === 13 ) {
+            var searchText = inputSearch.val().trim().toLowerCase();      
+            if (searchText !== '') {
+                ajaxContainer(searchText, template, movieList); 
+            } else {
+                alert('Perfavore, inserisci il titolo del film');
+                inputSearch.focus().select();
+            } 
         }
     });
 
@@ -25,54 +33,52 @@ jQuery(document).ready(function($) {
 function reset(element) {
     element.html('');
 }
+function ajaxContainer (searchText, template, movieList) {
+    reset(movieList);
+    var filmUrl = "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc";
+    var tvUrl = "https://api.themoviedb.org/3/search/tv?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc";
 
-function ajaxMovie(searchText, template, movieList) {
-    $.ajax({
-        url: "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
-        method: 'GET',
-        data: {
-            query: searchText,
-            language: "it-IT"
-        },
-        success: function (res) {
-            var movieListObj = res.results;        
-            moviePrint(movieListObj, template, movieList);
-        },
-        error: function () {
-            error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
-            alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
-        }
-    });
+    ajax(searchText, template, movieList, filmUrl, 'Film');
+    ajax(searchText, template, movieList, tvUrl, 'Tv');
 }
-
-function ajaxTv (searchText, template, movieList) {
+function ajax(searchText, template, movieList, url, type) {  
     $.ajax({
-        url: "https://api.themoviedb.org/3/search/tv?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc",
+        url,
         metod: 'GET',
         data: {
             query: searchText,
             language: "it-IT"
         },
         success: function(res) {
-            var tvListObj = res.results;
-            tvPrint(tvListObj, template, movieList);
+            var listObj = res.results;
+            print(listObj, template, movieList, type);
         },
         error: function() {
-            error('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
             alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
         }
     });
 }
+function print(listObj, template, movieList, type) {
+    if( listObj.length > 0 ) {
 
-function moviePrint(movieListObj, template, movieList) {
-    if( movieListObj.length > 0 ) {
-        for( var key in movieListObj ) {
+        var title, originalTitle;
+
+        for( var key in listObj ) {
+
+            if (type === 'Film') {
+                title = listObj[key].title;
+                originalTitle = listObj[key].original_title;
+            } else if ( type === 'Tv' ) {
+                title = listObj[key].name;
+                originalTitle = listObj[key].original_name;
+            }
+
             var movie = {
-                title: movieListObj[key].title,
-                originalTitle: movieListObj[key].original_title,
-                originalLanguage: fleg(movieListObj, key),
-                vote: starVote(movieListObj, key),
-                type: "Film"
+                title,
+                originalTitle,
+                originalLanguage: fleg(listObj, key),
+                vote: starVote(listObj, key),
+                type
             }
 
             var html = template(movie);
@@ -80,26 +86,8 @@ function moviePrint(movieListObj, template, movieList) {
         }
     }
 }
-
-function tvPrint(tvListObj, template, movieList) {
-    if( tvListObj.length > 0 ) {
-        for( var key in tvListObj ) {
-            var tv = {
-                title: tvListObj[key].name,
-                originalTitle: tvListObj[key].original_name,
-                originalLanguage: fleg(tvListObj, key),
-                vote: starVote(tvListObj, key),
-                type: "TV"
-            }
-
-            var html = template(tv);
-            movieList.append(html);
-        }
-    }
-}
-
-function starVote(movieListObj, key) {
-    var num = Math.round( movieListObj[key].vote_average / 2);
+function starVote(listObj, key) {
+    var num = Math.round( listObj[key].vote_average / 2);
     var difference = 5 - num;
     var star = '';
     
@@ -118,9 +106,8 @@ function starVote(movieListObj, key) {
         return star;
     }
 }
-
-function fleg(movieListObj, key) {
-    var language = movieListObj[key].original_language;
+function fleg(listObj, key) {
+    var language = listObj[key].original_language;
     if ( language === "it" ) {
         return '<img src="img/it.svg" alt="italy" width="20" height="20">';
     } else if ( language === "en" ) {
