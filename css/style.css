@@ -7,13 +7,12 @@
     padding: 0;
     box-sizing: border-box;
     font-family: 'Manrope', sans-serif;
-    font-weight: 300;
 }
-
 body {
-    background-color: grey;
+    background-color: #000;
+    font-weight: 300;
+    font-size: 15px;
 }
-
 .boolflix-app {
     display: flex;
     flex-direction: column;
@@ -27,19 +26,19 @@ body {
 }
 
 /*_________________ Boolflix [ Header] _________________*/
-
 .boolflix-header {
+    position: fixed;
     height: 80px;
+    width: 100%;
     background-color: #000;
+    z-index: 1;
     display: flex;
     align-items: center;
 }
-
-.boolflix-header img {
+.boolflix-header-logo {
     width: 200px;
 }
-
-.boolflix-header .header-content-position {
+.boolflix-header-content {
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -51,49 +50,40 @@ body {
     display: flex;
     justify-content: flex-end;
 }
-
-.search-border {
-    width: 30%;
+.search-input-syle {
     display: flex;
-    justify-content: flex-end;
+    width: 50%;
 }
-
-.search .input-search {
+.input-search {
     width: 100%;
-    padding: 10px 5px;
-    font-size: 15px;
+    color: #fff;
     border: none;
-    border-top-left-radius: 15px;
-    border-bottom-left-radius: 15px;
+    border-bottom: 1px solid #fff;
+    background: #000;
     outline: none;
 }
-
-.search .btn-search {
-    font-size: 15px;
-    padding: 10px 5px;
+.btn-search {
+    color: #fff;
     border: none;
-    border-top-right-radius: 15px;
-    border-bottom-right-radius: 15px;
+    border-bottom: 1px solid #fff;
+    background: #000;
     outline: none;
-}
-
-.search-border:hover {
-    box-shadow: 0 0 15px red;
-    border-radius: 15px;
 }
 
 /*__________________ Boolflix [ Main ] _________________*/
 #movie-list {
+    padding: 100px 0 0 0;
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
 }
-
 .movie {
     position: relative;
     margin: 5px;
 }
-
+.poster img {
+    height: 100%;
+}
 .layover {
     height: 100%;
     width: 100%;
@@ -103,7 +93,6 @@ body {
     background-color: rgba(0,0,0,0);
     transition: background .4s;
 }
-
 .movie-description {
     position: absolute;
     top: 50%;
@@ -113,11 +102,9 @@ body {
     opacity: 0;
     list-style: none;
 }
-
 .movie:hover .layover {
     background-color: rgba(0, 0, 0, 1);
 }
-
 .movie:hover .movie-description{
     opacity: 1;
 }
