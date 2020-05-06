@@ -46,11 +46,27 @@
             <div class="poster">{{{ poster }}}</div>
             <div class="layover"></div>
             <ul class="movie-description">
-                <li>Titolo: {{ title }}</li>
-                <li>Titolo originale: {{ originalTitle }}</li>
-                <li>Lingua originale: {{{ originalLanguage }}}</li>
-                <li>Voto: {{{ vote }}}</li>
-                <li>Tipo: {{{ type }}}</li>
+                <li> 
+                    <span>TITOLO :</span>
+                    <span>{{ title }}</span>
+                </li>
+                <li> 
+                    <span>TITOLO ORIGINALE :</span>
+                    <span>{{ originalTitle }}</span>
+                </li>
+                <li> 
+                    <span>LINGUA ORIGINALE :</span>
+                    <span>{{{ originalLanguage }}}</span>
+
+                </li>
+                <li>
+                    <span>VOTO :</span>
+                    <span>{{{ vote }}}</span>
+                </li>
+                <li> 
+                    <span>TIPO :</span>
+                    <span>{{{ type }}}</span>
+                </li>
             </ul>
         </div>
 
