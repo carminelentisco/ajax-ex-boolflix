@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BoolFlix</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'/>
+    <link rel="stylesheet" href="css/style.css">
     <!-- SCRIPT JS -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
@@ -12,19 +13,31 @@
 </head>
 <body>
     
-    <!-- Section search  -->
-    <section>
-        <input class="input-search" type="text" placeholder="Inserisci un titolo">
-        <button class="btn-search">Cerca</button>
-    </section>
+    <div class="boolflix-app">
+        <!-- Section search  -->
+        <header class="boolflix-header">
+            <div class="boolflix-container header-content-position">
+                <img src="img/boolflix-logo.png" alt="BoolFlix">
+                <!-- Search -->
+                <section class="search">
+                    <div class="search-border">
+                        <input class="input-search" type="text" placeholder="Inserisci un titolo">
+                        <button class="btn-search">Cerca</button>
+                    </div>
+                </section>
+            </div>
+        </header>
 
-    <!-- Section Movie List -->
-    <section id="movie-list"></section>
+        <!-- Section Movie List -->
+        <main id="movie-list" class="boolflix-container"></main>
+    </div>
 
     <!-- TEMPLATE -->   
     <script id="movie-template" type="text/x-handlebars-template">
         <div class="movie">
-            <ul>
+            {{{ poster }}}
+            <div class="layover"></div>
+            <ul class="movie-description">
                 <li>Titolo: {{ title }}</li>
                 <li>Titolo originale: {{ originalTitle }}</li>
                 <li>Lingua originale: {{{ originalLanguage }}}</li>
