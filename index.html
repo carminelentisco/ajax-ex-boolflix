@@ -14,28 +14,36 @@
 <body>
     
     <div class="boolflix-app">
+        
         <!-- Section search  -->
         <header class="boolflix-header">
-            <div class="boolflix-container header-content-position">
-                <img src="img/boolflix-logo.png" alt="BoolFlix">
+            
+            <div class="boolflix-container boolflix-header-content">             
+                <img class="boolflix-header-logo" src="img/boolflix-logo.png" alt="BoolFlix">
+                
                 <!-- Search -->
                 <section class="search">
-                    <div class="search-border">
+                    
+                    <div class="search-input-syle">
                         <input class="input-search" type="text" placeholder="Inserisci un titolo">
                         <button class="btn-search">Cerca</button>
                     </div>
+                    
                 </section>
             </div>
+
         </header>
 
         <!-- Section Movie List -->
         <main id="movie-list" class="boolflix-container"></main>
+
     </div>
 
     <!-- TEMPLATE -->   
     <script id="movie-template" type="text/x-handlebars-template">
+
         <div class="movie">
-            {{{ poster }}}
+            <div class="poster">{{{ poster }}}</div>
             <div class="layover"></div>
             <ul class="movie-description">
                 <li>Titolo: {{ title }}</li>
@@ -45,6 +53,7 @@
                 <li>Tipo: {{{ type }}}</li>
             </ul>
         </div>
+
     </script>
 </body>
 </html>
