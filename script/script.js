@@ -31,7 +31,7 @@ jQuery(document).ready(function($) {
 
 //_____________________FUNCTION______________________//
 function reset(element) {
-    element.html('');
+    element.fadeOut('fast').html('');
 }
 function ajaxContainer (searchText, template, movieList) {
     reset(movieList);
@@ -89,7 +89,7 @@ function print(listObj, template, movieList, type) {
             }
 
             var html = template(movie);
-            movieList.append(html);
+            movieList.append(html).fadeIn('slow');
         }
     }
 }
