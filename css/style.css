@@ -1,0 +1,124 @@
+/*_______________________________ IMPORT _____________________________*/
+@import url('https://fonts.googleapis.com/css2?family=Manrope:wght@300&display=swap');
+
+/*__________________ GENERAL RULE _______________________*/
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Manrope', sans-serif;
+    font-weight: 300;
+}
+
+body {
+    background-color: grey;
+}
+
+.boolflix-app {
+    display: flex;
+    flex-direction: column;
+}
+
+/*_____________________ UTILITY _________________________*/
+
+.boolflix-container {
+    width: 1200px;
+    margin: 0 auto;
+}
+
+/*_________________ Boolflix [ Header] _________________*/
+
+.boolflix-header {
+    height: 80px;
+    background-color: #000;
+    display: flex;
+    align-items: center;
+}
+
+.boolflix-header img {
+    width: 200px;
+}
+
+.boolflix-header .header-content-position {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+}
+
+/* --- Section search --- */
+.search {
+    flex-grow: 1;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search-border {
+    width: 30%;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.search .input-search {
+    width: 100%;
+    padding: 10px 5px;
+    font-size: 15px;
+    border: none;
+    border-top-left-radius: 15px;
+    border-bottom-left-radius: 15px;
+    outline: none;
+}
+
+.search .btn-search {
+    font-size: 15px;
+    padding: 10px 5px;
+    border: none;
+    border-top-right-radius: 15px;
+    border-bottom-right-radius: 15px;
+    outline: none;
+}
+
+.search-border:hover {
+    box-shadow: 0 0 15px red;
+    border-radius: 15px;
+}
+
+/*__________________ Boolflix [ Main ] _________________*/
+#movie-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.movie {
+    position: relative;
+    margin: 5px;
+}
+
+.layover {
+    height: 100%;
+    width: 100%;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: rgba(0,0,0,0);
+    transition: background .4s;
+}
+
+.movie-description {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #fff;
+    opacity: 0;
+    list-style: none;
+}
+
+.movie:hover .layover {
+    background-color: rgba(0, 0, 0, 1);
+}
+
+.movie:hover .movie-description{
+    opacity: 1;
+}
+
