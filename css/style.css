@@ -81,9 +81,6 @@ body {
     position: relative;
     margin: 5px;
 }
-.poster img {
-    height: 100%;
-}
 .layover {
     height: 100%;
     width: 100%;
@@ -93,6 +90,10 @@ body {
     background-color: rgba(0,0,0,0);
     transition: background .4s;
 }
+.flag{
+    width: 20px;
+    height: 20px;
+}
 .movie-description {
     position: absolute;
     top: 50%;
@@ -101,6 +102,17 @@ body {
     color: #fff;
     opacity: 0;
     list-style: none;
+}
+.star-color {
+    color: yellow;
+}
+.poster img {
+    height: 100%;
+}
+.movie-description li span:first-of-type {
+    font-weight: bold;
+    text-decoration: underline;
+    display: block;
 }
 .movie:hover .layover {
     background-color: rgba(0, 0, 0, 1);
