@@ -97,18 +97,18 @@ function starVote(listObj, key) {
     var num = Math.round( listObj[key].vote_average / 2);
     var difference = 5 - num;
     var star = '';
-    
+
     if ( num !== 0 ) {
         for ( var i = 1; i <= num; i++ ) {
-            star += '<i class="fas fa-star"></i>';
+            star += '<i class="fas fa-star star-color"></i>';
         }
         for ( var i = 1; i <= difference; i++ ) {
-            star += '<i class="far fa-star"></i>';
+            star += '<i class="far fa-star star-color"></i>';
         }
         return star;
     } else if ( num === 0 ) {
         for ( var i = 1; i <= 5; i++ ) {
-            star += '<i class="far fa-star"></i>';
+            star += '<i class="far fa-star star-color"></i>';
         }
         return star;
     }
