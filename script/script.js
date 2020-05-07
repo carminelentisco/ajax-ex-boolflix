@@ -85,7 +85,8 @@ function print(listObj, template, movieList, type) {
                 originalTitle,
                 originalLanguage: fleg(listObj, key),
                 vote: starVote(listObj, key),
-                type
+                type,
+                overview: listObj[key].overview.substring(0, 100) + '...'
             }
 
             var html = template(movie);
@@ -95,23 +96,17 @@ function print(listObj, template, movieList, type) {
 }
 function starVote(listObj, key) {
     var num = Math.round( listObj[key].vote_average / 2);
-    var difference = 5 - num;
     var star = '';
 
-    if ( num !== 0 ) {
-        for ( var i = 1; i <= num; i++ ) {
-            star += '<i class="fas fa-star star-color"></i>';
-        }
-        for ( var i = 1; i <= difference; i++ ) {
+    for ( var i = 1; i <= 5; i++ ) {
+        if ( i < num ) {
+            star += '<i class="fas fa-star star-color"></i>'; 
+        } else {
             star += '<i class="far fa-star star-color"></i>';
         }
-        return star;
-    } else if ( num === 0 ) {
-        for ( var i = 1; i <= 5; i++ ) {
-            star += '<i class="far fa-star star-color"></i>';
-        }
-        return star;
     }
+
+    return star;
 }
 function fleg(listObj, key) {
     var language = listObj[key].original_language;
