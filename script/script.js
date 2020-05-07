@@ -64,7 +64,7 @@ function print(listObj, template, movieList, type) {
         var title, originalTitle;
 
         for( var key in listObj ) {
-
+            
             if (type === 'Film') {
                 title = listObj[key].title;
                 originalTitle = listObj[key].original_title;
@@ -72,7 +72,7 @@ function print(listObj, template, movieList, type) {
                 title = listObj[key].name;
                 originalTitle = listObj[key].original_name;
             }
-
+            
             if (!!listObj[key].poster_path) {
                 poster = '<img src="https://image.tmdb.org/t/p/w342'+ listObj[key].poster_path + '" alt="'+ title +'" >';
             } else {
@@ -94,7 +94,7 @@ function print(listObj, template, movieList, type) {
         }
     }
 }
-function starVote(listObj, key) {
+function starVote( listObj, key ) {
     var num = Math.round( listObj[key].vote_average / 2);
     var star = '';
 
@@ -108,7 +108,7 @@ function starVote(listObj, key) {
 
     return star;
 }
-function fleg(listObj, key) {
+function fleg( listObj, key ) {
     var language = listObj[key].original_language;
 
     if ( ( language === "it" ) || ( language === "en" ) ) {
