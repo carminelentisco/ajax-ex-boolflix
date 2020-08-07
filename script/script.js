@@ -1,29 +1,39 @@
 jQuery(document).ready(function($) {
-    var inputSearch = $('.input-search');
-    var btnSearch = $('.btn-search');
-    var movieList = $('#movie-list');
-    var source = $('#movie-template').html();
-    var template = Handlebars.compile(source);
     
-    btnSearch.click(function () { 
-        var searchText = inputSearch.val().trim().toLowerCase();      
-        if (searchText !== '') {
-            ajaxContainer(searchText, template, movieList); 
-        } else {
-            alert('Perfavore, inserisci il titolo del film');
-            inputSearch.focus().select();
-        }
-    });
+    const searchContainer = $('#searchContainer');
+    const searchIcon = $('#searchIcon');
+    const searchInputContainer = $('#searchInputContainer');
+    const searchInput = $('#searchInput');
+    const movieList = $('#movie-list');
+    const source = $('#movie-template').html();
+    var template = Handlebars.compile(source);
 
-    inputSearch.keypress(function (e) { 
-        if (e.which === 13 ) {
-            var searchText = inputSearch.val().trim().toLowerCase();      
-            if (searchText !== '') {
-                ajaxContainer(searchText, template, movieList); 
-            } else {
-                alert('Perfavore, inserisci il titolo del film');
-                inputSearch.focus().select();
-            } 
+    const filmUrlHome = "https://api.themoviedb.org/3/discover/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc";
+    const tvUrlHome = "https://api.themoviedb.org/3/discover/tv?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc";
+
+    searchIcon.click(() => {
+        searchContainer.slideToggle();
+        if ( searchIcon.hasClass('fa-search') ) {
+            searchIcon.fadeOut().removeClass('fa-search').addClass('fa-times').fadeIn();
+        } else if ( searchIcon.hasClass('fa-times') ) {
+            searchIcon.fadeOut().removeClass('fa-times').addClass('fa-search').fadeIn();
+        }
+    })
+
+    searchInput.click( () => {
+        searchInputContainer.addClass('search_active');
+    })
+
+    ajaxHome(filmUrlHome, template, movieList, 'Film');
+    ajaxHome(tvUrlHome, template, movieList, 'Tv');
+    
+    searchInput.keyup( function(e) {
+        let inputText = searchInput.val();
+        if ( !inputText == '' ) {
+            ajaxContainer(inputText, template, movieList);
+        } else if( inputText == '' || inputText == ' '){
+            ajaxHome(filmUrlHome, template, movieList, 'Film');
+            ajaxHome(tvUrlHome, template, movieList, 'Tv');
         }
     });
 
@@ -31,31 +41,40 @@ jQuery(document).ready(function($) {
 
 //_____________________FUNCTION______________________//
 function reset(element) {
-    element.fadeOut('fast').html('');
+    element.html('');
 }
 function ajaxContainer (searchText, template, movieList) {
     reset(movieList);
     var filmUrl = "https://api.themoviedb.org/3/search/movie?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc";
     var tvUrl = "https://api.themoviedb.org/3/search/tv?api_key=1f8e3ba9ab80df0fb50bca64de0dc2cc";
 
-    ajax(searchText, template, movieList, filmUrl, 'Film');
-    ajax(searchText, template, movieList, tvUrl, 'Tv');
+    ajaxSearch(searchText, template, movieList, filmUrl, 'Film');
+    ajaxSearch(searchText, template, movieList, tvUrl, 'Tv');
 }
-function ajax(searchText, template, movieList, url, type) {  
+function ajaxSearch(searchText, template, movieList, url, type) {  
     $.ajax({
         url,
         metod: 'GET',
         data: {
             query: searchText,
             language: "it-IT"
-        },
-        success: function(res) {
-            var listObj = res.results;
-            print(listObj, template, movieList, type);
-        },
-        error: function() {
-            alert('Ops, si è verificato un errore, la pregiamo di riprovare più tardi');
         }
+    }).done(function(res) {
+        var listObj = res.results;
+        print(listObj, template, movieList, type);
+
+        if ( listObj.length === 0 ) {
+            alert('non vi sono film o tv disponibili');
+        }
+    })
+}
+function ajaxHome(url, template, movieList, type) {  
+    $.ajax({
+        url,
+        metod: 'GET'
+    }).done(function(res) {
+        var listObj = res.results;
+        print(listObj, template, movieList, type);
     });
 }
 function print(listObj, template, movieList, type) {

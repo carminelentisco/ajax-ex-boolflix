@@ -26,50 +26,78 @@ body {
 }
 
 /*_________________ Boolflix [ Header] _________________*/
-.boolflix-header {
+header {
     position: fixed;
+    z-index: 1;
     height: 80px;
     width: 100%;
-    border-bottom: 1px solid #ff0000;
     background-color: #000;
-    z-index: 1;
-    display: flex;
-    align-items: center;
+    /* border-bottom: 1px solid #ff0000; */
 }
-.boolflix-header-logo {
-    width: 200px;
+
+.boolflix-header {
+    background-color: #000;
+    filter: drop-shadow(0 1px 2px rgba(255, 0, 0, 1));
 }
-.boolflix-header-content {
+
+.boolflix_header-action {
     display: flex;
-    justify-content: flex-end;
+    justify-content: space-between;
     align-items: center;
 }
 
+.boolflix-header-logo {
+    width: 200px;
+}
+
+.search_button {
+    color: rgba( 150, 150, 150, 0.5);
+    font-size: 20px;
+}
+
+.search_button:hover {
+    cursor: pointer;
+    animation: rotateIcon .3s linear ;
+    color: rgb(126, 126, 126);
+}
+
+@keyframes rotateIcon {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
 /* --- Section search --- */
-.search {
-    flex-grow: 1;
-    display: flex;
-    justify-content: flex-end;
+
+.boolflix_search-container {
+    display: none;
+    padding: 40px 0;
+    background-color: rgb(15, 15, 15);
+    text-align: center;
 }
-.search-input-syle {
-    display: flex;
-    width: 50%;
+
+.search_container {
+    padding: 10px 20px;
+    border-radius: 15px;
+    background-color: rgba( 70, 70, 70, 0.5);
 }
-.input-search {
-    width: 100%;
+
+.search_container:hover {
+    background-color: rgba( 70, 70, 70, 1);
+}
+
+.search_input {
     color: #fff;
     border: none;
-    border-bottom: 1px solid #fff;
-    background: #000;
+    background-color: transparent;
     outline: none;
 }
-.btn-search {
-    color: #fff;
-    border: none;
-    border-bottom: 1px solid #fff;
-    background: #000;
-    outline: none;
+
+.search_active {
+    box-shadow: 0 0px 8px red;
+    background-color: rgba( 70, 70, 70, 1);
 }
+
+
 
 /*__________________ Boolflix [ Main ] _________________*/
 #movie-list {

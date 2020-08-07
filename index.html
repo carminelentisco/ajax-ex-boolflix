@@ -6,6 +6,7 @@
     <title>BoolFlix</title>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.13.0/css/all.min.css'/>
     <link rel="stylesheet" href="css/style.css">
+    <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css'/>
     <!-- SCRIPT JS -->
     <script src='https://cdnjs.cloudflare.com/ajax/libs/handlebars.js/4.7.6/handlebars.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/jquery/3.5.0/jquery.min.js'></script>
@@ -16,20 +17,20 @@
     <div class="boolflix-app">
         
         <!-- Section search  -->
-        <header class="boolflix-header">
-            
-            <div class="boolflix-container boolflix-header-content">             
-                <img class="boolflix-header-logo" src="img/boolflix-logo.png" alt="BoolFlix">
-                
-                <!-- Search -->
-                <section class="search">
-                    
-                    <div class="search-input-syle">
-                        <input class="input-search" type="text" placeholder="Inserisci un titolo">
-                        <button class="btn-search">Cerca</button>
+        <header>
+            <div class="boolflix-header">
+                <div class="boolflix-container boolflix_header-action">             
+                    <img class="boolflix-header-logo" src="img/boolflix-logo.png" alt="BoolFlix">
+                    <div class="search_button">
+                        <i id="searchIcon" class="fas fa-search"></i>
                     </div>
-                    
-                </section>
+                </div>
+            </div>
+            
+            <div id="searchContainer" class="boolflix_search-container">
+                <span id="searchInputContainer" class="search_container">
+                    <input id="searchInput" class="search_input" type="text" placeholder="Inserisci un titolo">
+                </span>
             </div>
 
         </header>
