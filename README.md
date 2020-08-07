@@ -5,9 +5,9 @@
 ### Tecnologie utilizzate
     - HTML5
     - CSS3
-    -JavaScript
-    -jQuery
-    -Handlebars
+    - JavaScript
+    - jQuery
+    - Handlebars
 
 <br>
 
